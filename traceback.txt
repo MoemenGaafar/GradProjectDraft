@@ -1,28 +1,31 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/helpers.rpy", line 142, in script
+  File "game/helpers.rpy", line 139, in script
     python:
-ScriptError: could not find label ''.
+  File "game/helpers.rpy", line 140, in <module>
+    send_to_server('Wolf')
+  File "game/helpers.rpy", line 26, in send_to_server
+    client_socket.sendall(message.encode('utf-8'))
+error: [Errno 32] Broken pipe
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/bootstrap.py", line 331, in bootstrap
-    renpy.main.main()
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/main.py", line 662, in main
-    run(restart)
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/main.py", line 148, in run
-    renpy.execution.run_context(True)
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/execution.py", line 922, in run_context
-    context.run()
-  File "game/helpers.rpy", line 142, in script
+  File "game/helpers.rpy", line 139, in script
     python:
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/script.py", line 918, in lookup
-    raise ScriptError("could not find label '%s'." % str(original))
-ScriptError: could not find label ''.
+  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/ast.py", line 928, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/python.py", line 2245, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/helpers.rpy", line 140, in <module>
+    send_to_server('Wolf')
+  File "game/helpers.rpy", line 26, in send_to_server
+    client_socket.sendall(message.encode('utf-8'))
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python2.7/socket.py", line 228, in meth
+error: [Errno 32] Broken pipe
 
-Linux-5.4.0-107-generic-x86_64-with-debian-bullseye-sid
+Linux-5.4.0-110-generic-x86_64-with-debian-bullseye-sid
 Ren'Py 7.4.11.2266
 RenPyTest 1.0
-Tue Apr 19 23:39:12 2022
+Fri May 27 20:45:07 2022

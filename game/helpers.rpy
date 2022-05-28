@@ -42,7 +42,7 @@ init python:
     def validate_choices(label, menu_label):
         event = {'type': 'validate_choices', 'label': label, 'menu_label': menu_label}
         send_to_server(json.dumps(event))
-        valid_choices = list(recv_from_server())
+        valid_choices = json.loads(recv_from_server())['choices']
         return valid_choices
 
     def get_next_scene():
@@ -102,8 +102,7 @@ menu login:
             narrator("Waiting for server to send join key", interact=False)
             renpy.pause(0.1, hard=True)
             join_key = get_join_key()
-            narrator("Your join key is "+join_key)
-            narrator("Waiting for other player to join...", interact=False)
+            narrator("Your join key is "+join_key+"\nWaiting for other player to join...")
             renpy.pause(0.1, hard=True)
             signal = recv_from_server()
             assert signal == 'start'

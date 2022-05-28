@@ -42,7 +42,7 @@ class WebClient():
         return json.loads(message)
     
     def send_to_renpy(self, message):
-        self.renpy_socket.sendall(message.encode('utf-8'))
+        self.renpy_socket.sendall(str(message).encode('utf-8'))
 
     def recv_from_renpy(self):
         message = self.renpy_socket.recv(4096)
@@ -88,7 +88,7 @@ class WebClient():
 async def main():
     port = int(sys.argv[1])
     renpy_address = ('localhost', port)
-    uri = "ws://localhost:8765" #"wss://experience-manager-grad-proj.herokuapp.com/" 
+    uri = "wss://final-exp-manager.herokuapp.com/" # "ws://localhost:8765" 
     myclient = await create_webclient(uri, renpy_address)
 
     await myclient.player_login()
@@ -119,7 +119,7 @@ async def main():
         elif type == 'validate_choices':
             await myclient.send_to_server(request)
             choices = await myclient.recv_from_server()
-            myclient.send_to_renpy(choices['choices'])
+            myclient.send_to_renpy(json.dumps(choices))
 
     await myclient.close()
 

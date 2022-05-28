@@ -21,10 +21,10 @@ class ExperienceManager():
         apply_choice_postconditions(label, menu_label, choice, self.gamestate)
 
     def apply_scene_postconditions(self, label, players_id):
-        apply_scene_postconditions(self, label, players_id, self.gamestate)
+        apply_scene_postconditions(label, players_id, self.gamestate)
 
     def check_choice(self, label, menu_label):
-        return check_choice(self, label, menu_label, self.gamestate)
+        return check_choice(label, menu_label, self.gamestate)
     
     def validate_choices(self, label, menu_label):
         searcher = EM_Searcher()

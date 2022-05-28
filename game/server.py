@@ -31,7 +31,7 @@ async def play(websocket, game, connected, player):
             if game.all_players_assigned():
                 for player in range(len(connected)):
                     first_scene = game.get_first_scene(player)
-                    event = {"type": "show", "label": first_scene}
+                    event = {"type": "show", "label": first_scene[1]}
                     await connected[player].send(json.dumps(event))
 
         elif type == 'choice':
@@ -80,8 +80,10 @@ async def join(websocket, join_key):
         await play(websocket, game, connected, 1)
 
     finally:
-        print('Disconnected from game session')
-#        connected.remove(websocket)
+        if game.all_players_ended():
+            print('Ended and Removed game session')
+            game.end_narrative()
+            del JOIN[join_key]
 
 async def start(websocket):
     # Initialize an Experience Manager, the set of WebSocket connections
@@ -108,9 +110,10 @@ async def start(websocket):
         await play(websocket, game, connected, 0)
 
     finally:
-        print('Ended and Removed game session')
-        # TODO: Implement clean ending of game session
-#        del JOIN[join_key]
+        if game.all_players_ended():
+            print('Ended and Removed game session')
+            game.end_narrative()
+            del JOIN[join_key]
 
 
 async def handler(websocket):

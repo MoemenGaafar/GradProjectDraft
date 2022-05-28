@@ -78,7 +78,6 @@ class EM_Search_Problem(Problem):
                 actions = get_actions(1-player_id, copy_state)
                 all_actions.extend(actions)
 
-        print('actions', all_actions)
         return all_actions
     
     def result(self, state, action):

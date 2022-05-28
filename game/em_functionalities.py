@@ -34,11 +34,11 @@ class Player:
         return True
     
     def wait(self):
-        print('Changed player', self.id, 'state to waiting')
+#        print('Changed player', self.id, 'state to waiting')
         self.state = PlayerState.WAITING
     
     def release(self):
-        print('Changed player', self.id, 'state to ready')
+#        print('Changed player', self.id, 'state to ready')
         self.state = PlayerState.READY
     
     def end(self):
@@ -237,7 +237,6 @@ def gate(player_id, gamestate):
     player_beat = player.get_beat_count()
     other_player = gamestate.players[1 - player_id]
     other_player_beat = other_player.get_beat_count()
-    print('numbers', player_beat, other_player_beat)
     if other_player_beat > player_beat or other_player.ended():
         return False
     if other_player_beat == player_beat and is_other_player_waiting(player_id, gamestate):
@@ -252,7 +251,7 @@ def get_first_scene(player_id, gamestate):
     player.add_scene(first_scene)
     player.increment_beat_count()
     apply_scene_postconditions(first_scene, [player_id], gamestate)
-    print('First scene for player', player_id, 'is', first_scene)
+#    print('First scene for player', player_id, 'is', first_scene)
     return [player_id], first_scene
 
 def handle_edge_cases(player_id, gamestate):
@@ -331,7 +330,6 @@ def get_all_next_scenes(player_id, gamestate):
 
     viable_scenes_list = get_viable_scenes(player_id, gamestate)
     
-    print('bawsal hna', viable_scenes_list)
     # If there are no suitable scenes, then the player should wait for other players to change the state
     # and check again later if there are any viable scenes
     if len(viable_scenes_list) == 0:

@@ -1,12 +1,2 @@
-{
-    "RedHasSword": "None",
-    "Wolf-Scene-Number": 0,
-    "Red-Scene-Number": 0,
-    "Wolf-Restaurant": "None",
-    "Restaurant-Open": 1,
-    "Hungry-Wolf": 3,
-    "Happy-Wolf": 0,
-    "Happy-Red": 1,
-    "Full-Wolf": 0,
-    "Tension": 0
-}
+{"Wolf-Bunny-Like": 0, "Wolf-Bunny-Alive": "None", "Hunter-Exists": 0,
+    "Red-Bunny-Like": 0,  "Red-Bunny-Alive": "None", "Red-Happy": 0, "Wolf-Red-Like": 0}

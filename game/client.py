@@ -6,6 +6,7 @@ import socket
 import json
 import os
 import sys
+import time
 
 
 async def create_webclient(uri, renpy_address):
@@ -46,6 +47,7 @@ class WebClient():
 
     def recv_from_renpy(self):
         message = self.renpy_socket.recv(4096)
+        print('From Renpy', message.decode('utf-8'))
         return message.decode('utf-8')
   
     async def close(self):
@@ -74,12 +76,19 @@ class WebClient():
             self.send_to_renpy('joined')
         else:
             raise ValueError()
+        
+        return init
     
     async def pick_role(self):
         role = self.recv_from_renpy()
         event = {'type': 'role', 'pick': role}
-        await self.send_to_server(event)
-    
+        await self.send_to_server(event)   
+
+    async def get_role(self):
+        role_dict = await self.recv_from_server()
+        self.send_to_renpy(role_dict['pick'])
+        time.sleep(2)
+        
     async def get_first_scene(self):
         first_scene = await self.recv_from_server()
         self.send_to_renpy(first_scene['label'])
@@ -88,12 +97,15 @@ class WebClient():
 async def main():
     port = int(sys.argv[1])
     renpy_address = ('localhost', port)
-    uri = "wss://final-exp-manager.herokuapp.com/" # "ws://localhost:8765" 
+    uri = "ws://localhost:8765" # "wss://final-exp-manager.herokuapp.com/"
     myclient = await create_webclient(uri, renpy_address)
 
-    await myclient.player_login()
+    init = await myclient.player_login()
 
-    await myclient.pick_role()
+    if init == 'host':
+        await myclient.pick_role()
+    elif init == 'join':
+        await myclient.get_role()
 
     await myclient.get_first_scene()
 

@@ -31,7 +31,7 @@ class EM_Search_Problem(Problem):
     def actions(self, state):
         def get_actions(player_id, state):
             actions = []
-            next_menu = self.get_next_menu(scenes[player_id], state)
+            next_menu = get_next_menu(scenes[player_id], state)
             if next_menu != 'None':
                 for choice in next_menu[2]:
                     actions.append(('menu', [next_menu[0], next_menu[1], choice], player_id))
@@ -52,7 +52,7 @@ class EM_Search_Problem(Problem):
 
         # actions are either scene transitions or player choices
         all_actions = []
-        scenes = self.get_current_scenes(state)
+        scenes = get_current_scenes(state)
         no_actions_found = []
 
         for i in range(2):
@@ -70,15 +70,22 @@ class EM_Search_Problem(Problem):
                 if sample_action[0] == 'menu' and scenes[0] == scenes[1]:
                     # In case we're in a multiplayer scene, menus are only considered once so break
                     break
-
         if len(all_actions) == 0:
             for no_action_state in no_actions_found:
                 player_id = no_action_state[0]
                 copy_state = no_action_state[1]
                 actions = get_actions(1-player_id, copy_state)
                 all_actions.extend(actions)
-
-        print('actions', all_actions)
+                if len(actions) > 0:
+                    sample_action = actions[0]
+                    if sample_action[0] == 'scene' and len(sample_action[1][0]) > 1: 
+                        # In case it's a multiplayer scene, it's the same action for both so break
+                        break
+                    if sample_action[0] == 'menu' and scenes[0] == scenes[1]:
+                        # In case we're in a multiplayer scene, menus are only considered once so break
+                        break
+        
+#        print('actions', all_actions)
         return all_actions
     
     def result(self, state, action):
@@ -98,22 +105,6 @@ class EM_Search_Problem(Problem):
             error = get_error(action[1][1], action[1][0][0], state)
             return error
         
-    
-    ##### HELPERS #####
-    def get_next_menu(self, label, state):
-        if 'menus' in state.scenes_list[label]:
-            menus = state.scenes_list[label]['menus']
-            for menu in menus:
-                if check_choice(label, menu, state) == 'None':
-                    return [label, menu, menus[menu]]  
-        return 'None'
-    
-    def get_current_scenes(self, state):
-        scenes = []
-        players = state.players
-        for player in players:
-            scenes.append(player.scenes[-1])
-        return scenes
 
 class EM_Searcher:        
     

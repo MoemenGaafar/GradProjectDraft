@@ -77,6 +77,23 @@ init python:
             character(reactions[0])
         else:
             character(reactions[1])
+        
+    def make_jump_choice(character, current_scene, menu_label, prompt, choices, jump_to):
+        if role.name == character.name:
+            character(prompt, interact=False)
+            choice = renpy.display_menu(choices)
+            send_choice(current_scene, menu_label, choice)
+        else:
+            choice = is_choice_done(current_scene, menu_label)
+            while choice is None:
+                character("Hmmmmmmm, Let me think....", interact=False)
+                renpy.pause(2, hard=True)
+                choice = is_choice_done(current_scene, menu_label)
+
+        if choice == choices[0][1]:
+            renpy.jump(jump_to[0])
+        else:
+            renpy.jump(jump_to[1])
 
 
 ############################# LOGIN ##################################
@@ -102,10 +119,10 @@ menu login:
             narrator("Waiting for server to send join key", interact=False)
             renpy.pause(0.1, hard=True)
             join_key = get_join_key()
-            narrator("Your join key is "+join_key+"\nWaiting for other player to join...")
+            narrator("Your join key is "+join_key+"\nWaiting for other player to join...", interact=False)
             renpy.pause(0.1, hard=True)
             signal = recv_from_server()
-            assert signal == 'start'
+            assert signal == 'joined'
             narrator("Other player joined!")
 
         jump pickRole
@@ -121,7 +138,7 @@ menu login:
             assert signal == 'joined'
             narrator("Joined Successfully!")
             
-        jump pickRole
+        jump waitRole
 
 
 menu pickRole:
@@ -143,6 +160,22 @@ menu pickRole:
         role = wolf
         renpy.jump(first_scene)
 
+label waitRole:
+    python:
+        narrator("Waiting for Host to pick roles...", interact=False)
+        renpy.pause(0.1, hard=True)
+        my_role = recv_from_server()
+        narrator('Your role is '+my_role+'!\nStarting narrative...', interact=False)
+        renpy.pause(0.1, hard=True)
+        if my_role == 'Red':
+            role = red
+        elif my_role == 'Wolf':
+            role = wolf
+        first_scene = recv_from_server()
+        current_scene = first_scene
+        renpy.jump(first_scene)
+
+
 ############################## NEXT SCENE ####################################
 
 label next:
@@ -159,7 +192,7 @@ label next:
 label wait_scene:
     python:
         narrator("Waiting for other player...", interact=False)
-        renpy.pause(3, hard=True)
+        renpy.pause(2, hard=True)
         next_scene = get_next_scene()
         current_scene = next_scene
         renpy.jump(next_scene)

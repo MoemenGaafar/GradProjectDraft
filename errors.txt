@@ -2,13 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 113: expected menuitem
-    python:
-    ^
-
-File "game/script.rpy", line 133: expected menuitem
-    python:
-    ^
+File "game/helpers.rpy", line 5: expected statement.
+    import os
+             ^
 
 Ren'Py Version: Ren'Py 7.4.11.2266
-Thu Mar 24 02:50:46 2022
+Fri Jun  3 13:24:07 2022

@@ -7,7 +7,6 @@ class ProbabilityCalculator():
     
     def calculate(self, choice_entries, scene_label, menu_label, choices):
         
-        print('aaaaa', choice_entries)
         targets = ['_'.join([scene_label, menu_label, choice]) for choice in choices]
 
         similar_session_labels = self.player_choices_df.apply(lambda row: 
@@ -30,7 +29,6 @@ class ProbabilityCalculator():
         for i in range(len(probabilities)):
             choices_and_probs[choices[i]] = probabilities[i]
 
-        print(choices_and_probs)
         return choices_and_probs
 
     def add_entry(self, choice_entries):

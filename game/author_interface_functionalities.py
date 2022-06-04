@@ -143,7 +143,7 @@ def open_scenes():
               [sg.Button('Create new features', size=button_size),
                sg.Button("New Scene", size=button_size),
                sg.Button("Ok", size=button_size),
-               sg.Button("Next (Plot)", size=button_size)]]
+               sg.Button("Next (Initial State)", size=button_size)]]
     window = sg.Window("Scenes", layout, finalize=True, element_padding=(6, 6), font=("Georgia", 12), modal=True,
                        element_justification='c')
 
@@ -151,9 +151,9 @@ def open_scenes():
         event, values = window.read()
         if event in (sg.WIN_CLOSED, "Ok"):
             break
-        elif event == 'Next (Plot)':
+        elif event == 'Next (Initial State)':
             window.hide()
-            open_plot()
+            open_initial_state()
             break
         elif event == 'Create new features':
             window.hide()
@@ -639,7 +639,7 @@ def open_initial_state():
     layout = [[sg.Text('Initial state:', text_color='white')]]
     layout_list2 = [sg.Button("Save", size=button_size), sg.Button("Cancel", size=button_size),
                     sg.Button("Next (Plot)", size=button_size)]
-    layout_list = [[sg.Text(key=f"-feature{i}-", text=features[i], size=(15, None)),
+    layout_list = [[sg.Text(key=f"-feature{i}-", text=features[i], size=(17, None)),
                     sg.Text('Initial value: ', justification='right', text_color='white'),
                     sg.InputText(key=f"-featurevalue{i}-", justification='center', size=textbox_size,
                                  default_text=str(initial_state[features[i]]))] for i in range(len(features))]

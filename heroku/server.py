@@ -24,18 +24,26 @@ async def play(websocket, game, connected, player):
         event = json.loads(message)
         print("Server received", event, "from player", player)
         type = event['type']
+        
+        print('other player choosing', game.is_other_player_choosing(player))
+        while game.is_other_player_choosing(player) or game.processing:
+            await asyncio.sleep(1)
+
+        game.processing = True
 
         if type == 'role':
             role = event['pick']
-            game.set_player_role(player, role)
-            if game.all_players_assigned():
-                for player in range(len(connected)):
-                    first_scene = game.get_first_scene(player)
-                    event = {"type": "show", "label": first_scene[1]}
-                    await connected[player].send(json.dumps(event))
+            other_role = game.set_player_roles(player, role)
+            event = {'type': 'role', 'pick': other_role}
+            await connected[1-player].send(json.dumps(event))
+            for player_id in range(len(connected)):
+                first_scene = game.get_first_scene(player_id)
+                event = {"type": "show", "label": first_scene[1]}
+                await connected[player_id].send(json.dumps(event))
 
         elif type == 'choice':
             game.apply_choice_postconditions(label = event['label'], menu_label = event['menu_label'], choice = event['choice'])
+            game.set_player_ready(player)
 
         elif type == 'show_request':
             players, next_scene = game.get_next_scene(player)
@@ -51,10 +59,13 @@ async def play(websocket, game, connected, player):
             print("Server sent", event, "to player", player)
         
         elif type == 'validate_choices':
+            game.set_player_choosing(player)
             valid_choices = game.validate_choices(event['label'], event['menu_label'])
             event = {'type': 'validated_choices', 'choices': valid_choices}
             await connected[player].send(json.dumps(event))
             print("Server sent", event, "to player", player)
+        
+        game.processing = False
 
 async def join(websocket, join_key):
     try:
@@ -80,10 +91,11 @@ async def join(websocket, join_key):
         await play(websocket, game, connected, 1)
 
     finally:
-        if game.all_players_ended():
-            print('Ended and Removed game session')
-            game.end_narrative()
+        if join_key in JOIN.keys():
+            if game.all_players_ended():
+                game.end_narrative()
             del JOIN[join_key]
+            print('Ended and Removed game session')
 
 async def start(websocket):
     # Initialize an Experience Manager, the set of WebSocket connections
@@ -105,15 +117,15 @@ async def start(websocket):
         }
         await websocket.send(json.dumps(event))
 
-        # Temporary - for testing.
-        print("first player started game", id(game))
+        print("# of Current Simulatenous Game Sessions =", len(JOIN))
         await play(websocket, game, connected, 0)
 
     finally:
-        if game.all_players_ended():
-            print('Ended and Removed game session')
-            game.end_narrative()
+        if join_key in JOIN.keys():
+            if game.all_players_ended():
+                game.end_narrative()
             del JOIN[join_key]
+            print('Ended and Removed game session')
 
 
 async def handler(websocket):

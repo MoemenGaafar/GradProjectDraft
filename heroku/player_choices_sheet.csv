@@ -1,3 +1,14 @@
-,session_0,session_1,session_2
-Common_Scene_Restaurant_Open,1,1,1
-Common_Scene_Restaurant_Close,0,0,0
+""
+Red1_Bird_Give
+Red1_Bird_Ignore
+Red_Meets_Bunny_Bunny_Help
+Red_Meets_Bunny_Bunny_Ignore
+Wolf1_Bunny_Help
+Wolf1_Bunny_Ignore
+Wolf1_Bunny_Eat
+Bunny_Calls_Hunter_Hunter_Call
+Bunny_Calls_Hunter_Hunter_Ignore
+Red_Meets_Wolf_Fight_Fight-Wolf_Yes
+Red_Meets_Wolf_Fight_Fight-Wolf_No
+Red_Meets_Wolf_Fight_Fight-Red_Yes
+Red_Meets_Wolf_Fight_Fight-Red_No

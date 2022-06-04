@@ -1,269 +1,238 @@
 {
-    "Red1": {
-        "player count": 1,
-        "scene number": [
-            1
-        ],
-        "player": [
-            "Red"
-        ],
-        "preconditions": {},
-        "postconditions": {},
-        "menus": {}
-    },
-    "Common_Scene": {
-        "player count": 2,
-        "scene number": [
-            "*"
-        ],
-        "player": [
-            "Red",
-            "Wolf"
-        ],
-        "preconditions": {},
-        "postconditions": {},
-        "menus": {
-            "Restaurant": {
-                "Open": {
-                    "Restaurant-Open": [
-                        "set",
-                        "1"
-                    ]
-                },
-                "Close": {
-                    "Restaurant-Open": [
-                        "set",
-                        "0"
-                    ]
-                }
+   "Red1":{
+      "player count":1,
+      "scene number": [1],
+      "player":["Red"],
+      "preconditions":{
+      },
+      "postconditions":{
+      },
+      "menus":{
+         "Bird":{
+            "Give":{},
+            "Ignore":{}
+         }
+      }
+  },
+
+  "Red_Meets_Bunny":{
+      "player count":1,
+      "scene number": [2],
+      "player":["Red"],
+      "preconditions":{
+      },
+      "postconditions":{
+         "Red-Bunny-Alive": ["set", "1"]
+      },
+      "menus":{
+         "Bunny":{
+            "Help":{
+               "Red-Bunny-Like": ["set", "1"]
+            },
+            "Ignore":{
+               "Red-Bunny-Like": ["set", "0"]
             }
-        }
-    },
-    "Red_Decides_Restaurant": {
-        "player count": 1,
-        "scene number": [
-            3,
-            5
-        ],
-        "player": [
-            "Red"
-        ],
-        "preconditions": {},
-        "postconditions": {},
-        "menus": {}
-    },
-    "Red_Ending": {
-        "player count": 1,
-        "scene number": [
-            4
-        ],
-        "player": [
-            "Red"
-        ],
-        "preconditions": {},
-        "postconditions": {},
-        "menus": {},
-        "end scene": 1
-    },
-    "Wolf1": {
-        "player count": 1,
-        "scene number": [
-            1
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {},
-        "postconditions": {},
-        "menus": {
-            "Menu 1": {
-                "koko": {
-                    "Red-Scene-Number": [
-                        "add",
-                        "1"
-                    ]
-                }
+         }
+      }
+      },
+   
+   "Red_Finds_Bunny_Corpse":{
+      "player count":1,
+      "scene number": [2],
+      "player":["Red"],
+      "preconditions":{
+      },
+      "postconditions":{
+         "Red-Bunny-Alive": ["set", "0"]
+      },
+      "menus":{
+      }
+      },
+
+
+  "Wolf1":{
+   "player count":1,
+   "scene number": [1],
+   "player":["Wolf"],
+   "preconditions":{
+   },
+   "postconditions":{
+   },
+   "menus":{
+      "Bunny":{
+         "Help":{
+            "Wolf-Bunny-Like": ["set", "1"],
+            "Wolf-Bunny-Alive": ["set", "1"]
+         },
+         "Ignore":{
+            "Wolf-Bunny-Like": ["set", "0"],
+            "Wolf-Bunny-Alive": ["set", "1"]
+         },
+         "Eat":{
+            "Wolf-Bunny-Alive": ["set", "0"]
+         }
+         }
+      }
+   },
+
+   "Wolf_Spots_Red_Bunny":{
+      "player count":1,
+      "scene number": [2],
+      "player":["Wolf"],
+      "preconditions":{
+         "Wolf-Bunny-Alive": ["is", "1"]
+      },
+      "postconditions":{
+      },
+      "menus":{
+      }
+   },
+
+   "Wolf_Spots_Red_NoBunny":{
+      "player count":1,
+      "scene number": [2],
+      "player":["Wolf"],
+      "preconditions":{
+         "Wolf-Bunny-Alive": ["is", "0"]
+      },
+      "postconditions":{
+      },
+      "menus":{
+      }
+   },
+
+
+   "Red_Wolf_Meet":{
+      "player count":2,
+      "scene number": [3],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+      },
+      "postconditions":{
+      },
+
+      "menus":{
+      }
+   },
+
+   "Bunny_Calls_Hunter":{
+      "player count":2,
+      "scene number": [4],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+         "Red-Bunny-Like": ["is", "1"], 
+         "Red-Bunny-Alive": ["is", "1"],
+         "Wolf-Bunny-Alive": ["is", "1"]
+      },
+      "postconditions":{
+      },
+
+      "menus":{
+         "Hunter":{
+            "Call":{
+               "Hunter-Exists": ["set", "1"]
+            },
+            "Ignore":{
             }
-        }
-    },
-    "Wolf_Goes_Restaurant": {
-        "player count": 1,
-        "scene number": [
-            3
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {},
-        "postconditions": {
-            "Wolf-Restaurant": [
-                "set",
-                "1"
-            ]
-        },
-        "menus": {}
-    },
-    "Wolf_Goes_Supermarket": {
-        "player count": 1,
-        "scene number": [
-            3
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {},
-        "postconditions": {
-            "Wolf-Restaurant": [
-                "set",
-                "0"
-            ],
-            "Full-Wolf": [
-                "set",
-                "3"
-            ]
-        },
-        "menus": {}
-    },
-    "Wolf_Buys_Food": {
-        "player count": 1,
-        "scene number": [
-            4
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {
-            "Wolf-Restaurant": [
-                "is",
-                "0"
-            ]
-        },
-        "postconditions": {},
-        "menus": {}
-    },
-    "Wolf_Restaurant_Closed": {
-        "player count": 1,
-        "scene number": [
-            4
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {
-            "Wolf-Restaurant": [
-                "is",
-                "1"
-            ],
-            "Restaurant-Open": [
-                "is",
-                "0"
-            ]
-        },
-        "postconditions": {
-            "Full-Wolf": [
-                "set",
-                "0"
-            ]
-        },
-        "menus": {}
-    },
-    "Wolf_Restaurant_Open": {
-        "player count": 1,
-        "scene number": [
-            4
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {
-            "Wolf-Restaurant": [
-                "is",
-                "1"
-            ],
-            "Restaurant-Open": [
-                "is",
-                "1"
-            ]
-        },
-        "postconditions": {
-            "Full-Wolf": [
-                "set",
-                "5"
-            ]
-        },
-        "menus": {}
-    },
-    "Wolf_Happy_Ending": {
-        "player count": 1,
-        "scene number": [
-            5
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {
-            "Full-Wolf": [
-                "more than",
-                "4"
-            ],
-            "Restaurant-Open": [
-                "is",
-                "1"
-            ]
-        },
-        "postconditions": {
-            "Happy-Wolf": [
-                "set",
-                "5"
-            ]
-        },
-        "menus": {},
-        "end scene": 1
-    },
-    "Wolf_Neutral_Ending": {
-        "player count": 1,
-        "scene number": [
-            5
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {
-            "Full-Wolf": [
-                "is",
-                "3"
-            ]
-        },
-        "postconditions": {
-            "Happy-Wolf": [
-                "set",
-                "3"
-            ]
-        },
-        "menus": {},
-        "end scene": 1
-    },
-    "Wolf_Sad_Ending": {
-        "player count": 1,
-        "scene number": [
-            5
-        ],
-        "player": [
-            "Wolf"
-        ],
-        "preconditions": {
-            "Full-Wolf": [
-                "less than",
-                "2"
-            ]
-        },
-        "postconditions": {
-            "Happy-Wolf": [
-                "set",
-                "0"
-            ]
-        },
-        "menus": {},
-        "end scene": 1
-    }
+         }
+      }
+   },
+
+   "Red_Meets_Wolf_Fight":{
+      "player count":2,
+      "scene number": [4],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+         "Red-Bunny-Alive": ["is", "0"],
+         "Wolf-Bunny-Alive": ["is", "0"]
+      },
+      "postconditions":{
+      },
+
+      "menus":{
+         "Fight-Wolf":{
+            "Yes":{
+               "Wolf-Red-Like": ["set", "0"]
+            },
+            "No":{
+               "Wolf-Red-Like": ["add", "1"]
+            }
+         },
+
+         "Fight-Red":{
+            "Yes":{
+               "Wolf-Red-Like": ["set", "0"],
+               "Hunter-Exists": ["set", "1"]
+            },
+            "No":{
+               "Wolf-Red-Like": ["add", "1"]
+            }
+         }
+      }
+   },
+
+   "Bunny_Makes_Peace":{
+      "player count":2,
+      "scene number": [4],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+         "Wolf-Bunny-Like": ["is", "1"],
+         "Red-Bunny-Like": ["is", "1"],
+         "Red-Bunny-Alive": ["is", "1"],
+         "Wolf-Bunny-Alive": ["is", "1"]
+      },
+      "postconditions":{
+         "Wolf-Red-Like": ["set", "2"]
+      },
+      "menus":{
+      }
+   },
+
+   "Hunter_Kills_Wolf":{
+      "player count":2,
+      "scene number": [5],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+         "Hunter-Exists": ["is", "1"],
+         "Wolf-Red-Like": ["less than", "2"]
+      },
+      "postconditions":{
+         "Red-Happy": ["set", "2"]
+      },
+      "menus":{
+      },
+      "end scene": 1
+   },
+
+   "All_Become_Friends":{
+      "player count":2,
+      "scene number": [5],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+         "Wolf-Red-Like": ["is", "2"]
+      },
+      "postconditions":{
+         "Red-Happy": ["set", "4"]
+      },
+      "menus":{
+      },
+      "end scene": 1
+   },
+
+   "Wolf_Eats_Red":{
+      "player count":2,
+      "scene number": [5],
+      "player":["Red", "Wolf"],
+      "preconditions":{
+         "Hunter-Exists": ["is", "0"],
+         "Wolf-Red-Like": ["less than", "2"]
+      },
+      "postconditions":{
+         "Red-Happy": ["set", "0"]
+      },
+      "menus":{
+      },
+      "end scene": 1
+   }
+   
 }

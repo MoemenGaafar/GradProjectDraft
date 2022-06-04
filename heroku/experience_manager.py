@@ -7,6 +7,7 @@ class ExperienceManager():
     def __init__(self, state_file, scene_file, plot_file, players_file, choices_file):
         self.gamestate = get_initial_gamestate(state_file, scene_file, plot_file, players_file)
         self.probability_calculator = ProbabilityCalculator(choices_file)
+        self.processing = False
         print("Created Experience Manager Instance")
     
 
@@ -79,8 +80,6 @@ class ExperienceManager():
                 if len(p0_solutions) > 0:
                     if  p0_solutions[0][0][0][0] == 'menu':
                         total_error += evaluate_menu(p0_solutions)
-                        if evaluate_menu(p0_solutions) == 4.0:
-                            print(p0_solutions)
                     else:
                         total_error += evaluate_scene(p0_solutions)[1]
 
@@ -106,9 +105,10 @@ class ExperienceManager():
             for choice in possible_choices:
                 additional_error = 0
                 choice_solutions = [(sol[0][1:], sol[1]) for sol in solutions if sol[0][0][1][2] == choice]
-
+#                print('-----')
+#                print(choice, choice_solutions)
                 if len(choice_solutions) == 1:
-                    total_error += choice_solutions[0][1]
+                    total_error += choice_solutions[0][1] * choices_and_probs[choice]
                     continue
 
                 p0_solutions, p1_solutions = separate_solutions(choice_solutions)
@@ -124,6 +124,8 @@ class ExperienceManager():
                         additional_error += evaluate_menu(p1_solutions)
                     else:
                         additional_error += evaluate_scene(p1_solutions)[1]
+                
+#                print(choice, additional_error)
 
                 total_error += (additional_error / ((len(p0_solutions) > 0) + (len(p1_solutions) > 0))) * choices_and_probs[choice]
 
@@ -174,8 +176,11 @@ class ExperienceManager():
     
     ############################################## PLAYER HELPERS ################################################
 
-    def set_player_role(self, player_id, role):
+    def set_player_roles(self, player_id, role):
         set_player_role(player_id, role, self.gamestate)
+        other_role = get_other_role(role, self.gamestate)
+        set_player_role(1-player_id, other_role, self.gamestate)
+        return other_role
     
     def all_players_assigned(self):
         return all_players_assigned(self.gamestate)
@@ -183,5 +188,19 @@ class ExperienceManager():
     def is_other_player_waiting(self, player_id):
         return is_other_player_waiting(player_id, self.gamestate)
     
+    def is_other_player_choosing(self, player_id):
+        for player in self.gamestate.players:
+            if player.get_id() != player_id and player.is_choosing():
+                return True
+        return False
+
     def all_players_ended(self):
         return all_players_ended(self.gamestate)
+    
+    def set_player_choosing(self, player_id):
+        player = self.gamestate.players[player_id]
+        player.choosing()
+    
+    def set_player_ready(self, player_id):
+        player = self.gamestate.players[player_id]
+        player.release()

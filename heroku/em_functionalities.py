@@ -6,6 +6,7 @@ class PlayerState(Enum):
     WAITING = 0
     READY = 1
     END = 2
+    CHOOSING = 3
 
 class Player:
 
@@ -34,22 +35,29 @@ class Player:
         return True
     
     def wait(self):
-        print('Changed player', self.id, 'state to waiting')
+#        print('Changed player', self.id, 'state to waiting')
         self.state = PlayerState.WAITING
     
     def release(self):
-        print('Changed player', self.id, 'state to ready')
+#        print('Changed player', self.id, 'state to ready')
         self.state = PlayerState.READY
     
     def end(self):
 #        print('Changed player', self.id, 'state to end')
         self.state = PlayerState.END
     
+    def choosing(self):
+        print('Changed player', self.id, 'state to choosing')
+        self.state = PlayerState.CHOOSING
+    
     def is_waiting(self):
         return self.state == PlayerState.WAITING
 
     def ended(self):
         return self.state == PlayerState.END
+    
+    def is_choosing(self):
+        return self.state == PlayerState.CHOOSING
     
     def get_id(self):
         return self.id
@@ -237,7 +245,6 @@ def gate(player_id, gamestate):
     player_beat = player.get_beat_count()
     other_player = gamestate.players[1 - player_id]
     other_player_beat = other_player.get_beat_count()
-    print('numbers', player_beat, other_player_beat)
     if other_player_beat > player_beat or other_player.ended():
         return False
     if other_player_beat == player_beat and is_other_player_waiting(player_id, gamestate):
@@ -252,7 +259,7 @@ def get_first_scene(player_id, gamestate):
     player.add_scene(first_scene)
     player.increment_beat_count()
     apply_scene_postconditions(first_scene, [player_id], gamestate)
-    print('First scene for player', player_id, 'is', first_scene)
+#    print('First scene for player', player_id, 'is', first_scene)
     return [player_id], first_scene
 
 def handle_edge_cases(player_id, gamestate):
@@ -321,6 +328,21 @@ def get_viable_scenes(player_id, gamestate):
             viable_scenes_list.append(label)
     return viable_scenes_list
 
+def get_next_menu(label, state):
+    if 'menus' in state.scenes_list[label]:
+        menus = state.scenes_list[label]['menus']
+        for menu in menus:
+            if check_choice(label, menu, state) == 'None':
+                return [label, menu, menus[menu]]  
+    return 'None'
+
+def get_current_scenes(state):
+    scenes = []
+    players = state.players
+    for player in players:
+        scenes.append(player.scenes[-1])
+    return scenes
+
 def get_all_next_scenes(player_id, gamestate):
     
     player = gamestate.players[player_id]
@@ -331,7 +353,6 @@ def get_all_next_scenes(player_id, gamestate):
 
     viable_scenes_list = get_viable_scenes(player_id, gamestate)
     
-    print('bawsal hna', viable_scenes_list)
     # If there are no suitable scenes, then the player should wait for other players to change the state
     # and check again later if there are any viable scenes
     if len(viable_scenes_list) == 0:
@@ -343,7 +364,7 @@ def get_all_next_scenes(player_id, gamestate):
         player_beat = player.get_beat_count()
         other_player = gamestate.players[1 - player_id]
         other_player_beat = other_player.get_beat_count()
-        if player_beat != other_player_beat:
+        if player_beat != other_player_beat or get_next_menu(other_player.scenes[-1], gamestate) != 'None':
             return [player_id], 'wait_scene'
         else:
             other_player.release()
@@ -388,6 +409,12 @@ def get_next_scene(player_id, gamestate):
 def set_player_role(player_id, role, gamestate):
     print('Player', player_id, 'set to role', role)
     gamestate.players[player_id].set_role(role)
+
+def get_other_role(role, gamestate):
+    roles = gamestate.players_data['characters']
+    for new_role in roles:
+        if role != new_role:
+            return new_role
 
 def get_player_role(player_id, gamestate):
     return gamestate.players[player_id].get_role()

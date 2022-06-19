@@ -8,11 +8,11 @@ import json
 import random
 import string
 from experience_manager import ExperienceManager
-import resource
+#import resource
 
 
-MAX_MEM = 600*1024*1024
-resource.setrlimit(resource.RLIMIT_AS, (MAX_MEM, MAX_MEM))
+#MAX_MEM = 1024*1024*1024
+#resource.setrlimit(resource.RLIMIT_AS, (MAX_MEM, MAX_MEM))
 
 
 JOIN = {}

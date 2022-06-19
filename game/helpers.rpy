@@ -8,7 +8,8 @@ init python:
     import json
     from contextlib import closing
 
-    cwd =  '../RenPyTest' # os.getcwd()
+    
+    cwd = os.path.join('..', 'RenPyTest') # '../RenPyTest/game' # os.getcwd() 
 
     current_scene = None
     role = None
@@ -20,7 +21,10 @@ init python:
             return s.getsockname()[1]
 
     def start_client(port):
-        subprocess.Popen(['python', cwd + '/game/client.py', str(port)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        if os.platform == 'linux' or os.platform == 'linux2':
+            subprocess.Popen(['python', os.path.join(cwd, 'game', 'client.py'), str(port)])
+        else:
+            subprocess.Popen(['python', os.path.join(cwd, 'game', 'client.py'), str(port)], shell=True)
 
     def send_to_server(message):
         client_socket.sendall(message.encode('utf-8'))

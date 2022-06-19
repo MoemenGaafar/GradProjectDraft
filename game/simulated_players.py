@@ -62,7 +62,7 @@ roles = ['Red', 'Wolf']
 scenes = load_file('scenes.json')
 
 def play(current_scene, client_socket, wait_times, index):
-    time.sleep(randint(5, 10))
+    time.sleep(randint(5, 20))
     current_waits = []
     while True:
         menus = scenes[current_scene]['menus']
@@ -73,10 +73,10 @@ def play(current_scene, client_socket, wait_times, index):
                 end_time = time.time()
                 current_waits.append(end_time - start_time)
                 
-                my_choice = choice(valid_choices)
-                if is_choice_done(current_scene, menu, client_socket) is None:
+                if is_choice_done(current_scene, menu, client_socket) is None or len(valid_choices) != 0:
+                    my_choice = choice(valid_choices)
                     send_choice(current_scene, menu, my_choice, client_socket)
-                    time.sleep(randint(5, 10))
+                    time.sleep(randint(5, 20))
 
         start_time = time.time()
         next_scene = get_next_scene(client_socket)
@@ -84,7 +84,7 @@ def play(current_scene, client_socket, wait_times, index):
         current_waits.append(end_time - start_time)
     
         if next_scene != 'wait_scene':
-            time.sleep(randint(5, 10))
+            time.sleep(randint(5, 20))
             current_scene = next_scene
         else:
             time.sleep(2)
@@ -97,6 +97,7 @@ def play(current_scene, client_socket, wait_times, index):
 def simulate_session(wait_times):
     # wait_times = [{'max': 0, 'avg': 0}, {'max': 0, 'avg': 0}]
     # Host Stuff
+    print('Started a new session')
     port_host = find_free_port()
     start_client(port_host)
     time.sleep(2)
@@ -139,7 +140,7 @@ def simulate_session(wait_times):
 
     host_thread.join()
     join_thread.join()
-
+    print(wait_times)
     return wait_times
 
 #while True:

@@ -2,9 +2,83 @@
 errors listed below, and try again.
 
 
-File "game/helpers.rpy", line 5: expected statement.
-    import os
-             ^
+The label Red1 is defined twice, at File "game/script.rpy", line 9:
+label Red1:
+and File "game/script_old.rpy", line 6:
+label Red1:
+
+
+The label Wolf1 is defined twice, at File "game/script.rpy", line 47:
+label Wolf1:
+and File "game/script_old.rpy", line 17:
+label Wolf1:
+
+
+The label Red_Meets_Bunny is defined twice, at File "game/script.rpy", line 82:
+label Red_Meets_Bunny:
+and File "game/script_old.rpy", line 28:
+label Red_Meets_Bunny:
+
+
+The label Red_Finds_Bunny_Corpse is defined twice, at File "game/script.rpy", line 112:
+label Red_Finds_Bunny_Corpse:
+and File "game/script_old.rpy", line 39:
+label Red_Finds_Bunny_Corpse:
+
+
+The label Wolf_Spots_Red_Bunny is defined twice, at File "game/script.rpy", line 130:
+label Wolf_Spots_Red_Bunny:
+and File "game/script_old.rpy", line 43:
+label Wolf_Spots_Red_Bunny:
+
+
+The label Wolf_Spots_Red_NoBunny is defined twice, at File "game/script.rpy", line 145:
+label Wolf_Spots_Red_NoBunny:
+and File "game/script_old.rpy", line 47:
+label Wolf_Spots_Red_NoBunny:
+
+
+The label Red_Wolf_Meet is defined twice, at File "game/script.rpy", line 160:
+label Red_Wolf_Meet:
+and File "game/script_old.rpy", line 51:
+label Red_Wolf_Meet:
+
+
+The label Bunny_Calls_Hunter is defined twice, at File "game/script.rpy", line 185:
+label Bunny_Calls_Hunter:
+and File "game/script_old.rpy", line 55:
+label Bunny_Calls_Hunter:
+
+
+The label Bunny_Makes_Peace is defined twice, at File "game/script.rpy", line 214:
+label Bunny_Makes_Peace:
+and File "game/script_old.rpy", line 66:
+label Bunny_Makes_Peace:
+
+
+The label Red_Meets_Wolf_Fight is defined twice, at File "game/script.rpy", line 239:
+label Red_Meets_Wolf_Fight:
+and File "game/script_old.rpy", line 70:
+label Red_Meets_Wolf_Fight:
+
+
+The label Hunter_Kills_Wolf is defined twice, at File "game/script.rpy", line 267:
+label Hunter_Kills_Wolf:
+and File "game/script_old.rpy", line 89:
+label Hunter_Kills_Wolf:
+
+
+The label All_Become_Friends is defined twice, at File "game/script.rpy", line 299:
+label All_Become_Friends:
+and File "game/script_old.rpy", line 93:
+label All_Become_Friends:
+
+
+The label Wolf_Eats_Red is defined twice, at File "game/script.rpy", line 320:
+label Wolf_Eats_Red:
+and File "game/script_old.rpy", line 97:
+label Wolf_Eats_Red:
+
 
 Ren'Py Version: Ren'Py 7.4.11.2266
-Fri Jun  3 13:24:07 2022
+Thu Jun 16 12:50:32 2022

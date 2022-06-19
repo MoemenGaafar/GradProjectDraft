@@ -1,28 +1,27 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/helpers.rpy", line 176, in script
+  File "game/helpers.rpy", line 103, in script
     python:
-ScriptError: could not find label ''.
+  File "game/helpers.rpy", line 111, in <module>
+    client_socket.connect(client_address)
+error: [Errno 111] Connection refused
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/bootstrap.py", line 331, in bootstrap
-    renpy.main.main()
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/main.py", line 662, in main
-    run(restart)
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/main.py", line 148, in run
-    renpy.execution.run_context(True)
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/execution.py", line 922, in run_context
-    context.run()
-  File "game/helpers.rpy", line 176, in script
+  File "game/helpers.rpy", line 103, in script
     python:
-  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/script.py", line 918, in lookup
-    raise ScriptError("could not find label '%s'." % str(original))
-ScriptError: could not find label ''.
+  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/ast.py", line 928, in execute
+    renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
+  File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/python.py", line 2245, in py_exec_bytecode
+    exec(bytecode, globals, locals)
+  File "game/helpers.rpy", line 111, in <module>
+    client_socket.connect(client_address)
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python2.7/socket.py", line 228, in meth
+error: [Errno 111] Connection refused
 
-Linux-5.4.0-113-generic-x86_64-with-debian-bullseye-sid
+Linux-5.4.0-120-generic-x86_64-with-debian-bullseye-sid
 Ren'Py 7.4.11.2266
 RenPyTest 1.0
-Fri Jun  3 15:50:14 2022
+Sun Jun 19 15:31:06 2022

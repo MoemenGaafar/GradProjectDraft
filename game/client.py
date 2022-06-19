@@ -97,7 +97,7 @@ class WebClient():
 async def main():
     port = int(sys.argv[1])
     renpy_address = ('localhost', port)
-    uri = "ws://localhost:8765" # "wss://final-exp-manager.herokuapp.com/"
+    uri = "wss://final-exp-manager.herokuapp.com/"  # "ws://localhost:8765"
     myclient = await create_webclient(uri, renpy_address)
 
     init = await myclient.player_login()

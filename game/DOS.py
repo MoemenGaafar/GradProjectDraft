@@ -1,11 +1,13 @@
 import threading
 import time
 from random import randint
+
+from regex import P
 from simulated_players import simulate_session
 threads = []
 wait_times_all = []
 
-num_sessions = 10
+num_sessions = 25
 
 for i in range(num_sessions):
     wait_times = [{'max': 0, 'avg': 0}, {'max': 0, 'avg': 0}]
@@ -13,13 +15,13 @@ for i in range(num_sessions):
     threads.append(threading.Thread(target=simulate_session, args=([wait_times])))
 
 for thread in threads:
-#    time.sleep(randint(1, 10))
+    time.sleep(randint(1, 10))
     thread.start()
+
+for thread in threads:
     thread.join()
 
-#for thread in threads:
-#    thread.join()
-
+print(len(wait_times_all))
 max_wait_all = 0
 avg_wait_all = 0
 for wait_times in wait_times_all:

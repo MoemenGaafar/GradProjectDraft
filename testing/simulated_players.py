@@ -6,16 +6,17 @@ import threading
 import json
 from contextlib import closing
 from random import choice, randint
-
-cwd = '.'
+import os
 
 def find_free_port():
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         s.bind(('', 0))
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         return s.getsockname()[1]
+
 def start_client(port):
-    subprocess.Popen(['python', cwd + '/client.py', str(port)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    subprocess.Popen(['python', os.path.join('..', 'game', 'client.py'), str(port)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
 def send_to_server(message, client_socket):
     client_socket.sendall(message.encode('utf-8'))
 
@@ -59,7 +60,7 @@ def is_choice_done(label, menu_label, client_socket):
     return choice
 
 roles = ['Red', 'Wolf']
-scenes = load_file('scenes.json')
+scenes = load_file(os.path.join('..', 'server', 'scenes.json'))
 
 def play(current_scene, client_socket, wait_times, index):
     time.sleep(randint(5, 20))

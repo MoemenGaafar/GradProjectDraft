@@ -1,27 +1,34 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/helpers.rpy", line 103, in script
+  File "game/helpers.rpy", line 122, in script
     python:
-  File "game/helpers.rpy", line 111, in <module>
-    client_socket.connect(client_address)
-error: [Errno 111] Connection refused
+  File "game/helpers.rpy", line 126, in <module>
+    join_key = get_join_key()
+  File "game/helpers.rpy", line 39, in get_join_key
+    key = recv_from_server()
+  File "game/helpers.rpy", line 34, in recv_from_server
+    message = client_socket.recv(4096)
+error: [Errno 104] Connection reset by peer
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/helpers.rpy", line 103, in script
+  File "game/helpers.rpy", line 122, in script
     python:
   File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/ast.py", line 928, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/python.py", line 2245, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/helpers.rpy", line 111, in <module>
-    client_socket.connect(client_address)
-  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python2.7/socket.py", line 228, in meth
-error: [Errno 111] Connection refused
+  File "game/helpers.rpy", line 126, in <module>
+    join_key = get_join_key()
+  File "game/helpers.rpy", line 39, in get_join_key
+    key = recv_from_server()
+  File "game/helpers.rpy", line 34, in recv_from_server
+    message = client_socket.recv(4096)
+error: [Errno 104] Connection reset by peer
 
 Linux-5.4.0-120-generic-x86_64-with-debian-bullseye-sid
 Ren'Py 7.4.11.2266
 RenPyTest 1.0
-Sun Jun 19 15:31:06 2022
+Sun Jun 19 16:36:48 2022

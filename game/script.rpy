@@ -7,8 +7,6 @@ define hunter = Character('Hunter')
 define bunny = Character('Bunny')
 
 
-
-
 label Red1:
 
     scene street1

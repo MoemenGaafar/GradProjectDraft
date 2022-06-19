@@ -7,7 +7,7 @@ from simulated_players import simulate_session
 threads = []
 wait_times_all = []
 
-num_sessions = 25
+num_sessions = 1
 
 for i in range(num_sessions):
     wait_times = [{'max': 0, 'avg': 0}, {'max': 0, 'avg': 0}]

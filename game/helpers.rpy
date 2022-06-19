@@ -2,6 +2,7 @@
 
 init python:
     import os
+    import sys
     import subprocess
     import socket
     import time
@@ -9,7 +10,7 @@ init python:
     from contextlib import closing
 
     
-    cwd = os.path.join('..', 'RenPyTest') # '../RenPyTest/game' # os.getcwd() 
+    cwd = os.getcwd()  # os.path.join('..', 'RenPyTest') 
 
     current_scene = None
     role = None
@@ -21,7 +22,7 @@ init python:
             return s.getsockname()[1]
 
     def start_client(port):
-        if os.platform == 'linux' or os.platform == 'linux2':
+        if sys.platform == 'linux' or sys.platform == 'linux2':
             subprocess.Popen(['python', os.path.join(cwd, 'game', 'client.py'), str(port)])
         else:
             subprocess.Popen(['python', os.path.join(cwd, 'game', 'client.py'), str(port)], shell=True)

@@ -1,0 +1,14 @@
+,session_0
+Red1_Bird_Give,1.0
+Red1_Bird_Ignore,0.0
+Red_Meets_Bunny_Bunny_Help,
+Red_Meets_Bunny_Bunny_Ignore,
+Wolf1_Bunny_Help,0.0
+Wolf1_Bunny_Ignore,0.0
+Wolf1_Bunny_Eat,1.0
+Bunny_Calls_Hunter_Hunter_Call,
+Bunny_Calls_Hunter_Hunter_Ignore,
+Red_Meets_Wolf_Fight_Fight-Wolf_Yes,0.0
+Red_Meets_Wolf_Fight_Fight-Wolf_No,1.0
+Red_Meets_Wolf_Fight_Fight-Red_Yes,0.0
+Red_Meets_Wolf_Fight_Fight-Red_No,1.0

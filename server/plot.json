@@ -1,0 +1,47 @@
+{
+    "gate every": 2,
+    "single player beat features": [
+        "Red-Happy"
+    ],
+    "single player beat weights": [
+        1
+    ],
+    "multi player beat features": [
+        "Red-Happy"
+    ],
+    "multi player beat weights": [
+        1
+    ],
+    "progression": [
+        [
+            "s",
+            [
+                "*"
+            ]
+        ],
+        [
+            "s",
+            [
+                "*"
+            ]
+        ],
+        [
+            "m",
+            [
+                "*"
+            ]
+        ],
+        [
+            "m",
+            [
+                "*"
+            ]
+        ],
+        [
+            "m",
+            [
+                4
+            ]
+        ]
+    ]
+}

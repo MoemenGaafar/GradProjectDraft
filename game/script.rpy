@@ -6,8 +6,11 @@ define bird = Character('Bird')
 define hunter = Character('Hunter')
 define bunny = Character('Bunny')
 
+image red_reversed = im.Flip("red.png", horizontal="True")
+image bunny_reversed = im.Flip("bunny.png", horizontal="True")
 
 label Red1:
+    play music "illurock.opus"
 
     scene street1
     with fade
@@ -18,7 +21,7 @@ label Red1:
 
     "Little Red lost her way on her way to the GRAMMYs..."
 
-    show red at left
+    show red_reversed at left
     with dissolve
 
     red "Oh no! It appears that I am lost!"
@@ -30,22 +33,22 @@ label Red1:
     show bird at right
     with dissolve
 
-    red "Oh look at that! It's a lovely bird!"
+    red "Oh look at that! It's a cute bird!"
 
-    bird "Why Hello! You are a lovely girl."
-
-    bird "But would you be lovelier and give me some of those seeds you keep in you purse?"
+    bird "Ew. An ugly human!"
 
     python:
         make_choice(character = red,
             current_scene = current_scene, 
             menu_label = "Bird",
-            prompt = "Do I give it some?",
-            choices = [("Give bird some seeds", "Give"), ("Ignore bird", "Ignore")], 
-            reactions = ["It's cute, I'll give it seeds", "I will not give it any, let it learn to feed itself"])
+            prompt = "Do I call the bird ugly back?",
+            choices = [("Let the poor bird go", "Give"), ("Make the rude bird sorry", "Ignore")],
+            reactions = ["That's unkind of you, little bird. Please excuse me.", "YOU ARE UGLY! FLY AWAY UGLY CREATURE!"])
     jump next
 
 label Wolf1:
+
+    play music "illurock.opus"
 
     scene street2
     with fade
@@ -61,7 +64,7 @@ label Wolf1:
 
     wolf "What won't I give now for some rosemary and lemon roast human..."
 
-    show bunny at right
+    show bunny_reversed at right
     with dissolve
 
     bunny "Bonsoir, Mr. Wolf!"
@@ -77,19 +80,19 @@ label Wolf1:
             menu_label = "Bunny",
             prompt = "What should I do?",
             choices = [("Help Bunny", "Help"), ("Ignore Bunny", "Ignore"), ("Eat Bunny", "Eat")],
-            reactions = ["Here is a carrot for you, Bugs!", "Go away, skinny Rabbit!", "Well... I have a better idea!"])
+            reactions = ["Here is a carrot for you, Bugs!", "Go away, skinny Rabbit!", "Well... I have a better idea! RAWR!!!"])
     jump next
 
 label Red_Meets_Bunny:
     scene street1
     with fade
 
-    show red at left
+    show red_reversed at left
     with dissolve
 
     "Little Red walks and walks, looking for the bus."
 
-    show bunny at right
+    show bunny_reversed at right
     with dissolve
 
     bunny "Bonsoir, little girl!"
@@ -114,12 +117,12 @@ label Red_Finds_Bunny_Corpse:
     scene street1
     with fade
 
-    show red at left
+    show red_reversed at left
     with dissolve
 
     "Little Red walks and walks, looking for the bus."
 
-    show bunnydead at right
+    show bunnydead
     with dissolve
 
     red "Oh no! What could possibly be this."
@@ -175,7 +178,7 @@ label Red_Wolf_Meet:
 
     wolf "Why, of course, I am Mr. Wolf"
 
-    red "What can I do for you Ms. Wolf"
+    red "What can I do for you Mr. Wolf"
 
     wolf "I'd like to cook you!"
 
@@ -194,10 +197,10 @@ label Bunny_Calls_Hunter:
     show red at right
     with dissolve
 
-    show bunny at center
+    show bunny0 at center
     with dissolve
 
-    bunny "I though I heard a scream"
+    bunny "I thought I heard a scream"
 
     red " HE WANTS TO EAT ME!!"
 
@@ -223,7 +226,7 @@ label Bunny_Makes_Peace:
     show red at right
     with dissolve
 
-    show bunny at center
+    show bunny0 at center
     with dissolve
 
     bunny "I though I heard a scream"
@@ -248,21 +251,24 @@ label Red_Meets_Wolf_Fight:
     show red at right
     with dissolve
 
+    wolf "Stop screaming, little girl! I have a headache!"
+
     python:
         make_choice(character = wolf,
             current_scene = current_scene, 
             menu_label = "Fight-Wolf",
-            prompt = "Do I threaten the Wolf?",
-            choices = [("Threaten the Wolf", "Yes"), ("Give him a second chance", "No")],
-            reactions = ["Take another step, Wolf, and my aunt in the police will make you sorry!", "Everybody deserves a second chance. Even a wolf. Let's  walk to the Cheesecake Factory instead, Mr. Wolf"])
+            prompt = "Do I attack the little girl?",
+            choices = [("Attack the girl", "Yes"), ("Spare the girl, the Cheesecake Factory is probably yummier anyway.", "No")],
+            reactions = ["Get ready to enter my tummy, little girl. RAAWR!", "Well, little girl, I will spare you but do remember you owe me one."])
 
         make_choice(character = red,
             current_scene = current_scene, 
             menu_label = "Fight-Red",
-            prompt = "Do I take another step?",
-            choices = [("Yes!", "Yes"), ("Spare the girl, the Cheesecake Factory is probably yummier anyway.", "No")],
-            reactions = ["Sorry little girl... fries before guys.", "Well, little girl, I will spare you but do remember you owe me one."])
-        
+            prompt = "Do I threaten the Wolf?",
+            choices = [("Yes. Scare him away!", "Yes"), ("Everybody deserves a second chance. Even a wolf.", "No")],
+            reactions = ["Take another step, Wolf, and my hunter friend will make you sorry!", "Let me buy you food at the Cheesecake Factory instead, Mr. Wolf"])
+
+
     jump next
 
 label Hunter_Kills_Wolf:
@@ -276,15 +282,12 @@ label Hunter_Kills_Wolf:
     show red at right
     with dissolve
 
-    show bunny
-    with dissolve
-
     show hunter
     with dissolve
 
-    hunter "I come heeding your call, courageous Bunny! Who do you want me to rid this City of!"
+    hunter "I come heeding your call, little girl! Who do you want me to rid this City of!"
 
-    bunny "Rid us of these evil Wolf, good hunter."
+    red "Rid us of this evil Wolf, good hunter."
 
     wolf "AAAAAAAAAAA"
 
@@ -314,7 +317,7 @@ label All_Become_Friends:
 
     wolf "Then let's go, Red"
 
-    red "Maybe we could get to the GRAMMY's after too?"
+    red "Maybe we could also go to the GRAMMY's later?"
 
     jump next
 

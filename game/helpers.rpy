@@ -9,8 +9,8 @@ init python:
     import json
     from contextlib import closing
 
-    
-    cwd = os.getcwd()  # os.path.join('..', 'RenPyTest') 
+
+    cwd = os.path.join('..', 'RenPyTest')  # os.getcwd()  # 
 
     current_scene = None
     role = None
@@ -25,7 +25,7 @@ init python:
         if sys.platform == 'linux' or sys.platform == 'linux2':
             subprocess.Popen(['python', os.path.join(cwd, 'game', 'client.py'), str(port)])
         else:
-            subprocess.Popen(['python', os.path.join(cwd, 'game', 'client.py'), str(port)], shell=True)
+            subprocess.Popen(['py', os.path.join(cwd, 'game', 'client.py'), str(port)], shell=True)
 
     def send_to_server(message):
         client_socket.sendall(message.encode('utf-8'))
@@ -33,17 +33,17 @@ init python:
     def recv_from_server():
         message = client_socket.recv(4096)
         return message.decode('utf-8')
-        
-    
+
+
     def get_join_key():
         key = recv_from_server()
         assert len(key) == 4
         return key
-    
+
     def send_choice(label, menu_label, choice):
         event = {'type': 'choice', 'label': label, 'menu_label': menu_label, 'choice': choice}
         send_to_server(json.dumps(event))
-    
+
     def validate_choices(label, menu_label):
         event = {'type': 'validate_choices', 'label': label, 'menu_label': menu_label}
         send_to_server(json.dumps(event))
@@ -55,7 +55,7 @@ init python:
         send_to_server(json.dumps(event))
         scene = recv_from_server()
         return scene
-    
+
     def is_choice_done(label, menu_label):
         event = {'type': 'check_choice', 'label': label, 'menu_label': menu_label}
         send_to_server(json.dumps(event))
@@ -63,7 +63,7 @@ init python:
         if choice == 'None':
             return None
         return choice
-    
+
     def make_choice(character, current_scene, menu_label, prompt, choices, reactions):
         if role.name == character.name:
             character(prompt, interact=False)
@@ -77,12 +77,13 @@ init python:
                 character("Hmmmmmmm, Let me think....", interact=False)
                 renpy.pause(2, hard=True)
                 choice = is_choice_done(current_scene, menu_label)
-      
-        if choice == choices[0][1]:
-            character(reactions[0])
-        else:
-            character(reactions[1])
         
+        for i in range(len(choices)):
+            if choice == choices[i][1]:
+                character(reactions[i])
+                break
+
+
     def make_jump_choice(character, current_scene, menu_label, prompt, choices, jump_to):
         if role.name == character.name:
             character(prompt, interact=False)
@@ -113,12 +114,13 @@ label start:
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_address = ('localhost', port)
     client_socket.connect(client_address)
-    
-    renpy.jump('login')
+   show choose_char
+   with fade
+   jump login
 
 menu login:
     "Do you want to host a new game or join an already-existing one?"
-    "Host": 
+    "Host":
         python:
             send_to_server('host')
             narrator("Waiting for server to send join key", interact=False)
@@ -132,7 +134,7 @@ menu login:
 
         jump pickRole
 
-    "Join": 
+    "Join":
         python:
             send_to_server('join')
             join_key = renpy.input('Please enter the join key: ', length=4)
@@ -142,7 +144,7 @@ menu login:
             signal = recv_from_server()
             assert signal == 'joined'
             narrator("Joined Successfully!")
-            
+
         jump waitRole
 
 
@@ -155,7 +157,7 @@ menu pickRole:
         current_scene = first_scene
         role = red
         renpy.jump(first_scene)
-        
+
 
     "Wolf":
        python:

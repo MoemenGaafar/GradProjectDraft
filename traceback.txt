@@ -1,34 +1,37 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
 While running game code:
-  File "game/helpers.rpy", line 122, in script
+  File "game/script.rpy", line 40, in script
     python:
-  File "game/helpers.rpy", line 126, in <module>
-    join_key = get_join_key()
-  File "game/helpers.rpy", line 39, in get_join_key
-    key = recv_from_server()
-  File "game/helpers.rpy", line 34, in recv_from_server
-    message = client_socket.recv(4096)
-error: [Errno 104] Connection reset by peer
+  File "game/script.rpy", line 46, in <module>
+    reactions = ["That's unkind of you, little bird. Please excuse me.", "YOU ARE UGLY! FLY AWAY UGLY CREATURE!"])
+  File "game/helpers.rpy", line 70, in make_choice
+    valid_choices = validate_choices(current_scene, menu_label)
+  File "game/helpers.rpy", line 50, in validate_choices
+    valid_choices = json.loads(recv_from_server())['choices']
+ValueError: No JSON object could be decoded
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "game/helpers.rpy", line 122, in script
+  File "game/script.rpy", line 40, in script
     python:
   File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/ast.py", line 928, in execute
     renpy.python.py_exec_bytecode(self.code.bytecode, self.hide, store=self.store)
   File "/home/moemen/gradproj/RenPy/renpy-7.4.11-sdk/renpy/python.py", line 2245, in py_exec_bytecode
     exec(bytecode, globals, locals)
-  File "game/helpers.rpy", line 126, in <module>
-    join_key = get_join_key()
-  File "game/helpers.rpy", line 39, in get_join_key
-    key = recv_from_server()
-  File "game/helpers.rpy", line 34, in recv_from_server
-    message = client_socket.recv(4096)
-error: [Errno 104] Connection reset by peer
+  File "game/script.rpy", line 46, in <module>
+    reactions = ["That's unkind of you, little bird. Please excuse me.", "YOU ARE UGLY! FLY AWAY UGLY CREATURE!"])
+  File "game/helpers.rpy", line 70, in make_choice
+    valid_choices = validate_choices(current_scene, menu_label)
+  File "game/helpers.rpy", line 50, in validate_choices
+    valid_choices = json.loads(recv_from_server())['choices']
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python2.7/json/__init__.py", line 339, in loads
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python2.7/json/decoder.py", line 364, in decode
+  File "/home/tom/ab/renpy-build/tmp/install.linux-x86_64/lib/python2.7/json/decoder.py", line 382, in raw_decode
+ValueError: No JSON object could be decoded
 
 Linux-5.4.0-120-generic-x86_64-with-debian-bullseye-sid
 Ren'Py 7.4.11.2266
 RenPyTest 1.0
-Sun Jun 19 16:36:48 2022
+Tue Jun 21 17:22:34 2022

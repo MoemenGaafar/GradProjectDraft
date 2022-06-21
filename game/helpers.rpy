@@ -10,7 +10,7 @@ init python:
     from contextlib import closing
 
 
-    cwd = os.path.join('..', 'RenPyTest')  # os.getcwd()  # 
+    cwd =  os.getcwd()  # os.path.join('..', 'RenPyTest')
 
     current_scene = None
     role = None

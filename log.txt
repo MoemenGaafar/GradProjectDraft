@@ -1,4 +1,4 @@
-Tue Jun 21 17:28:59 2022
+Tue Jun 21 17:55:35 2022
 Linux-5.4.0-120-generic-x86_64-with-debian-bullseye-sid
 Ren'Py 7.4.11.2266
  
@@ -6,14 +6,14 @@ Ren'Py 7.4.11.2266
 Bootstrap to the start of init.init took 0.06s
 Early init took 0.00s
 Loader init took 0.00s
-Loading error handling took 0.01s
-Loading script took 0.05s
+Loading error handling took 0.09s
+Loading script took 1.11s
 Loading save slot metadata. took 0.01s
 Loading persistent took 0.00s
 Importing _renpysteam: ImportError('No module named _renpysteam',)
 Set script version to: (8, 0, 0)
-Running init code took 0.02s
-Loading analysis data took 0.02s
+Running init code took 0.09s
+Loading analysis data took 0.00s
 Analyze and compile ATL took 0.00s
 Index archives took 0.00s
 Dump and make backups. took 0.05s
@@ -25,23 +25,9 @@ Creating interface object took 0.00s
 Cleaning stores took 0.00s
 Init translation took 0.03s
 Build styles took 0.00s
-Load screen analysis took 0.01s
-Analyze screens took 0.00s
-Save screen analysis took 0.00s
-Prepare screens took 0.04s
-Save pyanalysis. took 0.00s
-Save bytecode. took 0.00s
-Running _start took 0.00s
-Performance test:
-Interface start took 0.08s
-
-Initializing gl2 renderer:
-primary display bounds: (0, 0, 1920, 1080)
-swap interval: 1 frames
-Windowed mode.
-Vendor: 'Mesa/X.org'
-Renderer: 'llvmpipe (LLVM 12.0.0, 256 bits)'
-Version: '3.1 Mesa 21.2.6'
-Display Info: None
-Screen sizes: virtual=(1280, 720) physical=(924, 520) drawable=(924, 520)
-Maximum texture size: 4096x4096
+Load screen analysis took 0.00s
+Analyze screens took 0.02s
+Save screen analysis took 0.02s
+Prepare screens took 0.09s
+Save pyanalysis. took 0.02s
+Save bytecode. took 0.02s

@@ -8,16 +8,19 @@ def load_file(file):
     f.close()
     return data
 
-scene_file = "scenes.json"
-scenes_list = load_file(scene_file)
-indices = []
+def generate_new_sheet():
+    scene_file = "scenes.json"
+    scenes_list = load_file(scene_file)
+    indices = []
 
-for label in scenes_list:
-    scene = scenes_list[label]
-    for menu_label in scene['menus']:
-        menu = scene['menus'][menu_label]
-        for choice in menu:
-            indices.append(parse_entry(label, menu_label, choice))
+    for label in scenes_list:
+        scene = scenes_list[label]
+        for menu_label in scene['menus']:
+            menu = scene['menus'][menu_label]
+            for choice in menu:
+                indices.append(parse_entry(label, menu_label, choice))
 
-sheet = pd.DataFrame(index=indices)
-sheet.to_csv('./player_choices_sheet.csv')
+    sheet = pd.DataFrame(index=indices)
+    sheet.to_csv('./player_choices_sheet.csv')
+
+generate_new_sheet()

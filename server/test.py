@@ -3,11 +3,10 @@ from experience_manager import ExperienceManager
 em = ExperienceManager(state_file = "initial_state.json", \
         scene_file = "scenes.json", plot_file = "plot.json", players_file= "players_data.json", choices_file='player_choices_sheet.csv')
 
-em.set_player_role(0, 'Red')
-em.set_player_role(1, 'Wolf')
+em.set_player_roles(0, 'Red')
 print(em.get_first_scene(0))
 print(em.get_first_scene(1))
-em.apply_choice_postconditions("Red1", "Bird", "Give")
+em.apply_choice_postconditions("Red1", "Bird", "Ignore")
 print(em.get_next_scene(0))
 #print(em.validate_choices("Wolf1", "Bunny"))
 #em.apply_choice_postconditions("Wolf1", "Bunny", "Ignore")

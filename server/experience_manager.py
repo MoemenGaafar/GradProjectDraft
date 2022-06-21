@@ -1,6 +1,7 @@
 from em_functionalities import *
 from em_search import EM_Searcher
 from probability_calculator import ProbabilityCalculator
+import copy
 
 class ExperienceManager():
 
@@ -66,7 +67,7 @@ class ExperienceManager():
 
             return group_0, group_1
         
-        def evaluate_scene(solutions):
+        def evaluate_scene(solutions, entries):
             possible_next_scene_labels = list(set([sol[0][0][1][1] for sol in solutions]))
             labels_and_errors = []
             for label in possible_next_scene_labels:
@@ -79,15 +80,15 @@ class ExperienceManager():
 
                 if len(p0_solutions) > 0:
                     if  p0_solutions[0][0][0][0] == 'menu':
-                        total_error += evaluate_menu(p0_solutions)
+                        total_error += evaluate_menu(p0_solutions, entries)
                     else:
-                        total_error += evaluate_scene(p0_solutions)[1]
+                        total_error += evaluate_scene(p0_solutions, entries)[1]
 
                 if len(p1_solutions) > 0:
                    if p1_solutions[0][0][0][0] == 'menu':
-                       total_error += evaluate_menu(p1_solutions)
+                       total_error += evaluate_menu(p1_solutions, entries)
                    else:
-                       total_error += evaluate_scene(p1_solutions)[1]
+                       total_error += evaluate_scene(p1_solutions, entries)[1]
 
                 total_error /= (len(p0_solutions) > 0) + (len(p1_solutions) > 0)
                 labels_and_errors.append((label, total_error))
@@ -96,12 +97,12 @@ class ExperienceManager():
             least_error_label = min(labels_and_errors, key=lambda x: x[1])
             return least_error_label
         
-        def evaluate_menu(solutions):
+        def evaluate_menu(solutions, entries):
             possible_choices = list(set([sol[0][0][1][2] for sol in solutions]))
             total_error = 0
             scene_label = solutions[0][0][0][1][0]
             menu_label = solutions[0][0][0][1][1]
-            choices_and_probs = self.probability_calculator.calculate(self.gamestate.choice_entries, scene_label, menu_label, possible_choices)
+            choices_and_probs = self.probability_calculator.calculate(entries, scene_label, menu_label, possible_choices)
             for choice in possible_choices:
                 additional_error = 0
                 choice_solutions = [(sol[0][1:], sol[1]) for sol in solutions if sol[0][0][1][2] == choice]
@@ -112,18 +113,20 @@ class ExperienceManager():
                     continue
 
                 p0_solutions, p1_solutions = separate_solutions(choice_solutions)
+                my_entries = copy.deepcopy(entries)
+                my_entries[parse_entry(scene_label, menu_label, choice)] = 1
 
                 if len(p0_solutions) > 0:
                     if  p0_solutions[0][0][0][0] == 'menu':
-                        additional_error += evaluate_menu(p0_solutions)
+                        additional_error += evaluate_menu(p0_solutions, my_entries)
                     else:
-                        additional_error += evaluate_scene(p0_solutions)[1]
+                        additional_error += evaluate_scene(p0_solutions, my_entries)[1]
 
                 if len(p1_solutions) > 0:
                     if p1_solutions[0][0][0][0] == 'menu':
-                        additional_error += evaluate_menu(p1_solutions)
+                        additional_error += evaluate_menu(p1_solutions, my_entries)
                     else:
-                        additional_error += evaluate_scene(p1_solutions)[1]
+                        additional_error += evaluate_scene(p1_solutions, my_entries)[1]
                 
 #                print(choice, additional_error)
 
@@ -143,7 +146,7 @@ class ExperienceManager():
             if player_id not in first_action[1][0]:
                 continue
             viable_solutions.append(sol)
-        least_error_label = evaluate_scene(viable_solutions)
+        least_error_label = evaluate_scene(viable_solutions, self.gamestate.choice_entries)
 
         return least_error_label[0]
 
